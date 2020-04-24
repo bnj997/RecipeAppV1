@@ -24,6 +24,7 @@ class RecipeListFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -31,7 +32,6 @@ class RecipeListFragment: Fragment() {
         recipe_list.adapter = RecipeListAdapter(recipeList)
         recipe_list.layoutManager = LinearLayoutManager(this.activity)
         recipe_list.setHasFixedSize(true)
-
 
         //Clear All Button
         view.findViewById<Button>(R.id.button_clearall).setOnClickListener {
@@ -42,6 +42,7 @@ class RecipeListFragment: Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }
+
 
     private fun generateRecipe(size: Int): List<RecipeItem> {
         val list = ArrayList<RecipeItem>()

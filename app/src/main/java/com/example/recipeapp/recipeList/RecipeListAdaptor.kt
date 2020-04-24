@@ -13,8 +13,8 @@ class RecipeListAdapter(private val recipeList: List<RecipeItem>) : RecyclerView
 
     class RecipeViewHolder(recipeItemView: View) : RecyclerView.ViewHolder(recipeItemView) {
         val imageView: ImageView = recipeItemView.findViewById(R.id.recipe_image)
-        val textView1: TextView = recipeItemView.findViewById(R.id.recipe_name)
-        val textView2: TextView = recipeItemView.findViewById(R.id.recipe_duration)
+        val recipeNameTextView: TextView = recipeItemView.findViewById(R.id.recipe_name)
+        val recipeDurationTextView: TextView = recipeItemView.findViewById(R.id.recipe_duration)
     }
 
 
@@ -26,8 +26,8 @@ class RecipeListAdapter(private val recipeList: List<RecipeItem>) : RecyclerView
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val currentRecipeItem = recipeList[position]
         holder.imageView.setImageResource(currentRecipeItem.ImageResource)
-        holder.textView1.text = currentRecipeItem.text1
-        holder.textView2.text = currentRecipeItem.text2
+        holder.recipeNameTextView.text = currentRecipeItem.text1
+        holder.recipeDurationTextView.text = currentRecipeItem.text2
     }
 
     override fun getItemCount(): Int {
