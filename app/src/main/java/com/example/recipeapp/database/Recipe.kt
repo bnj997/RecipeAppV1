@@ -6,15 +6,15 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "recipe_table")
 data class Recipe(
-    @PrimaryKey(autoGenerate = true)
-    var recipeId: Int,
-
     @ColumnInfo(name = "recipe_name")
-    val recipeName: String,
+    var recipeName: String,
 
     @ColumnInfo(name = "recipe_method")
     var recipeMethod: String,
 
     @ColumnInfo(name = "recipe_duration ")
-    var recipeDuration: Int
-)
+    var recipeDuration: String
+) {
+    @PrimaryKey(autoGenerate = true)
+    var recipeId: Long = 0L
+}

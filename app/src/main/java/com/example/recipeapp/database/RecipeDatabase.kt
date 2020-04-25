@@ -4,17 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 /** 'entities' refers to what class you want to keep in this database */
-@Database(entities = [Recipe::class], version = 1, exportSchema = false)
+@Database(entities = [Recipe::class], version = 8, exportSchema = false)
 
 abstract class RecipeDatabase : RoomDatabase() {
 
     /** Use this val to 1. Connect this class (RecipeDatabase) to the Dao Object and 2. Access the RecipeDatabaseDao
      * Do not need to provide a body for this variable as Room takes care of all the code
      * */
-    abstract val recipeDatabaseDao: RecipeDatabaseDao
+    abstract fun recipeDatabaseDao(): RecipeDatabaseDao
 
 
     /** Defining companion object allows us to add functions to RecipeDatabase class
@@ -31,7 +35,7 @@ abstract class RecipeDatabase : RoomDatabase() {
          * Aims to create a single, only instance of this RecipeDatabase
          * This method can be called from the outside
          */
-        fun getInstance(context: Context): RecipeDatabase {
+        fun getInstance(context: Context, scope: CoroutineScope): RecipeDatabase {
 
             /**
              * synchronized' means only one thread at a time can access this method
@@ -72,8 +76,6 @@ abstract class RecipeDatabase : RoomDatabase() {
             }
 
         }
-
-
 
     }
 
