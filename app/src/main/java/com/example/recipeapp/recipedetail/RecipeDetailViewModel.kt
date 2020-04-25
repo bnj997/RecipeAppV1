@@ -2,7 +2,6 @@ package com.example.recipeapp.recipedetail
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.database.Recipe
 import com.example.recipeapp.database.RecipeDatabase
@@ -15,13 +14,11 @@ class RecipeDetailViewModel(application: Application) : AndroidViewModel(applica
 
     private val repository: RecipeRepository
 
-    val allRecipes: LiveData<List<Recipe>>
-
     init {
         val recipeDao = RecipeDatabase.getInstance(application, viewModelScope).recipeDatabaseDao()
         repository = RecipeRepository(recipeDao)
-        allRecipes = repository.allRecipes
     }
+
 
     fun insert(recipe: Recipe) {
         viewModelScope.launch(Dispatchers.IO) {

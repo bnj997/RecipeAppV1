@@ -36,9 +36,6 @@ class RecipeListAdapter internal constructor(context: Context) : RecyclerView.Ad
         return recipeList.size
     }
 
-
-
-
     class RecipeViewHolder(recipeItemView: View) : RecyclerView.ViewHolder(recipeItemView) {
         val imageView: ImageView = recipeItemView.findViewById(R.id.recipe_image)
         val recipeNameTextView: TextView = recipeItemView.findViewById(R.id.recipe_name)

@@ -19,7 +19,7 @@ interface RecipeDatabaseDao {
     @Query("DELETE FROM recipe_table")
     fun deleteAllRecipes()
 
-    @Query("SELECT * FROM recipe_table ORDER BY recipe_name DESC")
+    @Query("SELECT * FROM recipe_table ORDER BY recipeId DESC")
     fun getAllRecipes(): LiveData<List<Recipe>>
 
 }

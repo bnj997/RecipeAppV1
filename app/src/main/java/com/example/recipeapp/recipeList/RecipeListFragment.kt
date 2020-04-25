@@ -29,13 +29,16 @@ class RecipeListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = RecipeListAdapter(requireActivity())
 
+        val adapter = RecipeListAdapter(requireActivity())
         recipe_list.adapter = adapter
         recipe_list.layoutManager = LinearLayoutManager(this.activity)
 
-        recipeListViewModel = ViewModelProvider(this).get(RecipeListViewModel::class.java)
 
+        /** Displays the list currently in database
+         * Also updates the list once stuff is added to the list
+         */
+        recipeListViewModel = ViewModelProvider(this).get(RecipeListViewModel::class.java)
         recipeListViewModel.allRecipes.observe(viewLifecycleOwner, Observer { recipes ->
             recipes?.let { adapter.setRecipes(it) }
         })
