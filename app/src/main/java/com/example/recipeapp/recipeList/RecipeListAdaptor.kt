@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.database.Recipe
 import com.example.recipeapp.databinding.ListItemRecipeBinding
 
+
+
+
 class RecipeListAdapter : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
 
 
@@ -39,7 +42,6 @@ class RecipeListAdapter : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder
         }
     }
 }
-
 
 
 class RecipeDiffCallback : DiffUtil.ItemCallback<Recipe>() {

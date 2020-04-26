@@ -10,9 +10,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentFirstBinding
+import com.google.android.material.snackbar.Snackbar
+
 
 
 /**
@@ -27,24 +28,38 @@ class RecipeListFragment: Fragment() {
 
         val recipeListViewModel = ViewModelProvider(this).get(RecipeListViewModel::class.java)
 
-        binding.recyclerViewList.layoutManager = LinearLayoutManager(this.activity)
-
         binding.recipeListViewModel = recipeListViewModel
 
         val adapter = RecipeListAdapter()
         binding.recyclerViewList.adapter = adapter
 
-        /** Displays the list currently in database
+        binding.lifecycleOwner = this
+
+
+        /** DISPLAYS LIST CURRENTLY IN DATABASE
          * Also updates the list once stuff is added to the list
          */
         recipeListViewModel.allRecipes.observe(viewLifecycleOwner, Observer { recipes ->
             recipes?.let { adapter.submitList(it) }
         })
 
-        binding.buttonClearall.setOnClickListener {
-            recipeListViewModel.deleteAllRecipes()
-        }
 
+        /** OBSERVES SNACKBAR VARIABLE
+         * Handles the snackbar that displays to user list has been cleared
+         * */
+        recipeListViewModel.showSnackBarEvent.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    getString(R.string.snackbar_clearall),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                recipeListViewModel.doneShowingSnackbar()
+            }
+        })
+
+
+        /** GOES TO RECIPEDETAIL SCREEN ONCE CLICKED**/
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
