@@ -7,7 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.database.Recipe
 import com.example.recipeapp.database.RecipeDatabase
 import com.example.recipeapp.database.RecipeRepository
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class RecipeListViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,6 +20,12 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
         val recipeDao = RecipeDatabase.getInstance(application, viewModelScope).recipeDatabaseDao()
         repository = RecipeRepository(recipeDao)
         allRecipes = repository.allRecipes
+    }
+
+    fun deleteAllRecipes() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllRecipes()
+        }
     }
 
 

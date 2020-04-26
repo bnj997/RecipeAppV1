@@ -6,53 +6,50 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipeapp.R
-import kotlinx.android.synthetic.main.fragment_first.*
+import com.example.recipeapp.databinding.FragmentFirstBinding
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class RecipeListFragment: Fragment() {
 
-    private lateinit var recipeListViewModel: RecipeListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_first, container, false)
-    }
 
+        val binding: FragmentFirstBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_first, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val recipeListViewModel = ViewModelProvider(this).get(RecipeListViewModel::class.java)
 
+        binding.recyclerViewList.layoutManager = LinearLayoutManager(this.activity)
 
-        val adapter = RecipeListAdapter(requireActivity())
-        recipe_list.adapter = adapter
-        recipe_list.layoutManager = LinearLayoutManager(this.activity)
+        binding.recipeListViewModel = recipeListViewModel
 
+        val adapter = RecipeListAdapter()
+        binding.recyclerViewList.adapter = adapter
 
         /** Displays the list currently in database
          * Also updates the list once stuff is added to the list
          */
-        recipeListViewModel = ViewModelProvider(this).get(RecipeListViewModel::class.java)
         recipeListViewModel.allRecipes.observe(viewLifecycleOwner, Observer { recipes ->
-            recipes?.let { adapter.setRecipes(it) }
+            recipes?.let { adapter.submitList(it) }
         })
 
-
-        //Clear All Button
-        view.findViewById<Button>(R.id.button_clearall).setOnClickListener {
+        binding.buttonClearall.setOnClickListener {
+            recipeListViewModel.deleteAllRecipes()
         }
 
-        //Add entry button
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
-    }
 
+        return binding.root
+    }
 
 }

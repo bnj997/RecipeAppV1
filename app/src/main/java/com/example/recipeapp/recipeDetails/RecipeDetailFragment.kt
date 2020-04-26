@@ -1,19 +1,20 @@
-package com.example.recipeapp.recipedetail
+package com.example.recipeapp.recipeDetails
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipeapp.R
 import com.example.recipeapp.database.Recipe
+import com.example.recipeapp.databinding.FragmentFirstBinding
+import com.example.recipeapp.databinding.FragmentSecondBinding
+import com.example.recipeapp.recipeList.RecipeListAdapter
 import com.example.recipeapp.recipeList.RecipeListViewModel
 import kotlinx.android.synthetic.main.fragment_second.*
 
@@ -22,22 +23,19 @@ import kotlinx.android.synthetic.main.fragment_second.*
  */
 class RecipeDetailFragment : Fragment() {
 
-    private lateinit var recipeDetailViewModel: RecipeDetailViewModel
-
     private lateinit var recipeName: String
     private lateinit var recipeMethod: String
     private lateinit var recipeDuration: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        recipeDetailViewModel = ViewModelProvider(this).get(RecipeDetailViewModel::class.java)
+        val binding: FragmentSecondBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_second, container, false)
 
-        view.findViewById<Button>(R.id.save_button).setOnClickListener {
+        val recipeDetailViewModel = ViewModelProvider(this).get(RecipeDetailViewModel::class.java)
+
+        binding.recipeDetailViewModel = recipeDetailViewModel
+
+        binding.saveButton.setOnClickListener {
             recipeName = recipe_name_editText.text.toString()
             recipeMethod = recipe_method_editText.text.toString()
             recipeDuration = recipe_duration_editText.text.toString()
@@ -48,5 +46,6 @@ class RecipeDetailFragment : Fragment() {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
 
+        return binding.root
     }
 }

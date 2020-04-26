@@ -1,4 +1,4 @@
-package com.example.recipeapp.recipedetail
+package com.example.recipeapp.recipeDetails
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
