@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 
 /** 'entities' refers to what class you want to keep in this database */
-@Database(entities = [Recipe::class], version = 10, exportSchema = false)
+@Database(entities = [Recipe::class], version = 11, exportSchema = false)
 
 abstract class RecipeDatabase : RoomDatabase() {
 

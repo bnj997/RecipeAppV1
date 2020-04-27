@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentSecondBinding
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -31,6 +32,19 @@ class RecipeDetailFragment : Fragment() {
             if (it == true) {
                 recipeDetailViewModel.doneSavingRecipe()
                 findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            }
+        })
+
+
+        /** OBSERVES ERROR STATUS AND SHOWS ERROR IF ENTRY NOT ADDED **/
+        recipeDetailViewModel.snackBarMessageError.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    "Please complete all boxes",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                recipeDetailViewModel.doneShowingError()
             }
         })
 
