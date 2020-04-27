@@ -51,7 +51,9 @@ class RecipeDiffCallback : DiffUtil.ItemCallback<Recipe>() {
     }
 
     override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
-        return oldItem == newItem
+        return oldItem.recipeName == newItem.recipeName &&
+                oldItem.recipeDuration == newItem.recipeDuration &&
+                oldItem.recipeMethod == newItem.recipeMethod
     }
 
 }

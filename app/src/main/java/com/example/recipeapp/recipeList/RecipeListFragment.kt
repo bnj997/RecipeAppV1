@@ -21,19 +21,16 @@ import com.google.android.material.snackbar.Snackbar
  */
 class RecipeListFragment: Fragment() {
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val binding: FragmentFirstBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_first, container, false)
-
         val recipeListViewModel = ViewModelProvider(this).get(RecipeListViewModel::class.java)
-
         binding.recipeListViewModel = recipeListViewModel
+        binding.lifecycleOwner = this
 
         val adapter = RecipeListAdapter()
         binding.recyclerViewList.adapter = adapter
 
-        binding.lifecycleOwner = this
 
 
         /** DISPLAYS LIST CURRENTLY IN DATABASE
@@ -63,7 +60,6 @@ class RecipeListFragment: Fragment() {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
-
         return binding.root
     }
 

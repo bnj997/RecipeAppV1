@@ -29,6 +29,7 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
 
 
 
+
     /** HANDLES SNACKBAR LOGIC
      * Boolean that is observed by fragment and changes value once you click on clear button
      **/
@@ -55,6 +56,7 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
             repository.deleteAllRecipes()
         }
     }
+
 
 
     /** CANCEL ALL COROUTINES

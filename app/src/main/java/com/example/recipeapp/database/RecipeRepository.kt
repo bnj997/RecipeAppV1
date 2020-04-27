@@ -33,4 +33,10 @@ class RecipeRepository(private val recipeDao: RecipeDatabaseDao) {
         recipeDao.deleteAllRecipes()
     }
 
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getLatestRecipe() {
+        recipeDao.getLatestRecipe()
+    }
+
 }

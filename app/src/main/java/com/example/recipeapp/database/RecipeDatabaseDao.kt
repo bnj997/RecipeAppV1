@@ -22,4 +22,7 @@ interface RecipeDatabaseDao {
     @Query("SELECT * FROM recipe_table ORDER BY recipeId DESC")
     fun getAllRecipes(): LiveData<List<Recipe>>
 
+    @Query("SELECT * FROM recipe_table ORDER BY recipeId DESC LIMIT 1")
+    fun getLatestRecipe(): Recipe?
+
 }
