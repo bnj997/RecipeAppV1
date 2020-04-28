@@ -40,6 +40,14 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
         _showSnackbarEvent.value = false
     }
 
+    /** HANDLES LOGIC WHEN PRESSING ON LIST ITEM
+     **/
+    private var _openTaskEvent = MutableLiveData<Long>()
+    val openTaskEvent: LiveData<Long>
+        get() = _openTaskEvent
+    fun openRecipe(recipeId: Long) {
+        _openTaskEvent.value = recipeId
+    }
 
 
     /** HANDLES LOGIC WHEN DELETING RECIPE

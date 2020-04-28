@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -28,9 +29,10 @@ class RecipeListFragment: Fragment() {
         binding.recipeListViewModel = recipeListViewModel
         binding.lifecycleOwner = this
 
-        val adapter = RecipeListAdapter()
-        binding.recyclerViewList.adapter = adapter
 
+        /** SET UP ADAPTER **/
+        val adapter = RecipeListAdapter(recipeListViewModel)
+        binding.recyclerViewList.adapter = adapter
 
 
         /** DISPLAYS LIST CURRENTLY IN DATABASE
@@ -46,20 +48,23 @@ class RecipeListFragment: Fragment() {
          * */
         recipeListViewModel.showSnackBarEvent.observe(viewLifecycleOwner, Observer {
             if (it == true) {
-                Snackbar.make(
-                    requireActivity().findViewById(android.R.id.content),
-                    getString(R.string.snackbar_clearall),
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.snackbar_clearall), Snackbar.LENGTH_SHORT).show()
                 recipeListViewModel.doneShowingSnackbar()
             }
         })
 
+        /** GOES TO THE SPECIFIC RECIPE ITEMS VIEW SCREEN**/
+        recipeListViewModel.openTaskEvent.observe(viewLifecycleOwner, Observer {
+            findNavController().navigate(RecipeListFragmentDirections.actionFirstFragmentToThirdFragment(it))
+        })
 
-        /** GOES TO RECIPEDETAIL SCREEN ONCE CLICKED**/
+
+        /** GOES TO ADD RECIPE SCREEN ONCE FAB CLICKED **/
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            findNavController().navigate(RecipeListFragmentDirections.actionFirstFragmentToSecondFragment())
         }
+
+
         return binding.root
     }
 

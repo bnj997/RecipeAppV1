@@ -11,7 +11,7 @@ import com.example.recipeapp.databinding.ListItemRecipeBinding
 
 
 
-class RecipeListAdapter : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
+class RecipeListAdapter(private val viewModel: RecipeListViewModel) : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -21,15 +21,15 @@ class RecipeListAdapter : ListAdapter<Recipe, RecipeListAdapter.RecipeViewHolder
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(viewModel, item)
     }
 
 
     class RecipeViewHolder private constructor (val binding: ListItemRecipeBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Recipe) {
-            binding.itemName = item.recipeName
-            binding.itemDuration = item.recipeDuration
+        fun bind(viewModel: RecipeListViewModel, item: Recipe) {
+            binding.viewModel = viewModel
+            binding.recipe = item
             binding.executePendingBindings()
         }
 

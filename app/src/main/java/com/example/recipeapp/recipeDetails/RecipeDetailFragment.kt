@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentSecondBinding
+import com.example.recipeapp.recipeList.RecipeListFragmentDirections
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -30,24 +31,22 @@ class RecipeDetailFragment : Fragment() {
         /** OBSERVES SAVEDRECIPE VARIABLE SO CAN MOVE TO LIST FRAGMENT ONCE DONE **/
         recipeDetailViewModel.savedRecipe.observe(viewLifecycleOwner, Observer {
             if (it == true) {
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), "New Recipe Added", Snackbar.LENGTH_SHORT).show()
                 recipeDetailViewModel.doneSavingRecipe()
-                findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                findNavController().navigate(RecipeDetailFragmentDirections.actionSecondFragmentToFirstFragment())
             }
         })
 
 
         /** OBSERVES ERROR STATUS AND SHOWS ERROR IF ENTRY NOT ADDED **/
-        recipeDetailViewModel.snackBarMessageError.observe(viewLifecycleOwner, Observer {
+        recipeDetailViewModel.snackBarMessage.observe(viewLifecycleOwner, Observer {
             if (it == true) {
-                Snackbar.make(
-                    requireActivity().findViewById(android.R.id.content),
-                    "Please complete all boxes",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), "Please Complete All Boxes", Snackbar.LENGTH_SHORT).show()
                 recipeDetailViewModel.doneShowingError()
             }
         })
 
         return binding.root
     }
+
 }

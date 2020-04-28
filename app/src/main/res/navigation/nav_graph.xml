@@ -10,10 +10,13 @@
         android:name="com.example.recipeapp.recipeList.RecipeListFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
-
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment"
+            app:enterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_FirstFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment"
             app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
@@ -21,9 +24,20 @@
         android:name="com.example.recipeapp.recipeDetails.RecipeDetailFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
-
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ThirdFragment"
+        android:name="com.example.recipeapp.recipeView.RecipeViewFragment"
+        android:label="@string/third_fragment_label"
+        tools:layout="@layout/fragment_third">
+        <argument
+            android:name="recipeId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_ThirdFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

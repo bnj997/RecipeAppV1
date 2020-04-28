@@ -5,16 +5,17 @@
 
     <data>
         <variable
-            name="itemName"
-            type="String" />
+            name="viewModel"
+            type="com.example.recipeapp.recipeList.RecipeListViewModel" />
         <variable
-            name="itemDuration"
-            type="String" />
+            name="recipe"
+            type="com.example.recipeapp.database.Recipe" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.openRecipe(recipe.recipeId)}"
         android:layout_margin="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +35,7 @@
 
             <TextView
                 android:id="@+id/recipe_name"
-                android:text="@{itemName}"
+                android:text="@{recipe.recipeName}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -45,7 +46,7 @@
 
             <TextView
                 android:id="@+id/recipe_duration"
-                android:text="@{itemDuration}"
+                android:text="@{recipe.recipeDuration}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

@@ -35,8 +35,8 @@ class RecipeRepository(private val recipeDao: RecipeDatabaseDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun getLatestRecipe() {
-        recipeDao.getLatestRecipe()
+    suspend fun getThisRecipe(recipeId: Long) : Recipe {
+        return recipeDao.getThisRecipe(recipeId)
     }
 
 }

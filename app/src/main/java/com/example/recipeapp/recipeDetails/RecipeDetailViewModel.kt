@@ -1,7 +1,6 @@
 package com.example.recipeapp.recipeDetails
 
 import android.app.Application
-import android.provider.SyncStateContract.Helpers.update
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,17 +30,15 @@ class RecipeDetailViewModel(application: Application) : AndroidViewModel(applica
     val recipeDuration = MutableLiveData<String>()
 
 
-
     /** HANDLES SNACKBAR ERROR IF NOT ENTRIES FILLED OUT **/
-    private var _snackBarMessageError = MutableLiveData<Boolean>()
-    val snackBarMessageError: LiveData<Boolean>
-        get() = _snackBarMessageError
+    private var _snackBarMessage = MutableLiveData<Boolean>()
+    val snackBarMessage: LiveData<Boolean>
+        get() = _snackBarMessage
     fun doneShowingError() {
-        _snackBarMessageError.value = false
+        _snackBarMessage.value = false
     }
 
-
-    /** NAVIGATION VARIABLES **/
+    /** HANDLES SAVE RECIPE STATUS IF ENTRIES FILLED OUT PROPERLY **/
     private var _savedRecipe = MutableLiveData<Boolean>()
     val savedRecipe: LiveData<Boolean>
         get() = _savedRecipe
@@ -53,13 +50,13 @@ class RecipeDetailViewModel(application: Application) : AndroidViewModel(applica
     /** HANDLES INSERT FUNCTIONALITY **/
     fun onAddNewRecipe() {
         uiScope.launch {
-            var name = recipeName.value
-            var method = recipeMethod.value
-            var duration = recipeDuration.value
+            val name = recipeName.value
+            val method = recipeMethod.value
+            val duration = recipeDuration.value
             if (name == null || method == null || duration == null) {
-                _snackBarMessageError.value = true
+                _snackBarMessage.value = true
             } else {
-                val newRecipe = Recipe(name!!, method!!, duration!!)
+                val newRecipe = Recipe(name, method, duration)
                 insert(newRecipe)
                 _savedRecipe.value = true
             }
@@ -70,7 +67,6 @@ class RecipeDetailViewModel(application: Application) : AndroidViewModel(applica
             repository.insert(recipe)
         }
     }
-
 
 
     /** CANCEL ALL COROUTINES
