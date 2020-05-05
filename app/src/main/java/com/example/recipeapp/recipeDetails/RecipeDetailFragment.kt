@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentSecondBinding
 import com.example.recipeapp.recipeList.RecipeListFragmentDirections
@@ -19,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
  */
 class RecipeDetailFragment : Fragment() {
 
+    private val args: RecipeDetailFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -27,11 +29,13 @@ class RecipeDetailFragment : Fragment() {
         binding.recipeDetailViewModel = recipeDetailViewModel
         binding.lifecycleOwner = this
 
+        recipeDetailViewModel.initialise(args.recipeId)
+
 
         /** OBSERVES SAVEDRECIPE VARIABLE SO CAN MOVE TO LIST FRAGMENT ONCE DONE **/
         recipeDetailViewModel.savedRecipe.observe(viewLifecycleOwner, Observer {
             if (it == true) {
-                Snackbar.make(requireActivity().findViewById(android.R.id.content), "New Recipe Added", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), "Recipe saved successfully!", Snackbar.LENGTH_SHORT).show()
                 recipeDetailViewModel.doneSavingRecipe()
                 findNavController().navigate(RecipeDetailFragmentDirections.actionSecondFragmentToFirstFragment())
             }

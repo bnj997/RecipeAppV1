@@ -3,18 +3,20 @@ package com.example.recipeapp.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "recipe_table")
-data class Recipe(
+data class Recipe constructor(
     @ColumnInfo(name = "recipe_name")
-    var recipeName: String,
+    var recipeName: String = "",
 
     @ColumnInfo(name = "recipe_method")
-    var recipeMethod: String,
+    var recipeMethod: String = "",
 
     @ColumnInfo(name = "recipe_duration ")
-    var recipeDuration: String
-) {
-    @PrimaryKey(autoGenerate = true)
-    var recipeId: Long = 0L
-}
+    var recipeDuration: String = "",
+
+    @PrimaryKey @ColumnInfo(name = "recipeid")
+    var recipeId: String = UUID.randomUUID().toString()
+)
+

@@ -61,7 +61,7 @@ class RecipeListFragment: Fragment() {
 
         /** GOES TO ADD RECIPE SCREEN ONCE FAB CLICKED **/
         binding.fab.setOnClickListener {
-            findNavController().navigate(RecipeListFragmentDirections.actionFirstFragmentToSecondFragment())
+            findNavController().navigate(RecipeListFragmentDirections.actionFirstFragmentToSecondFragment(null))
         }
 
 

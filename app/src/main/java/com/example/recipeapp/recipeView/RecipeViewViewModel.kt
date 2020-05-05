@@ -24,7 +24,7 @@ class RecipeViewViewModel(application: Application) : AndroidViewModel(applicati
     val recipeDuration = MutableLiveData<String>()
 
 
-    fun initialise(recipeId: Long) {
+    fun initialise(recipeId: String) {
         uiScope.launch {
             val thisRecipe = getThisRecipe(recipeId)
             recipeName.value = thisRecipe.recipeName
@@ -32,7 +32,7 @@ class RecipeViewViewModel(application: Application) : AndroidViewModel(applicati
             recipeDuration.value = thisRecipe.recipeDuration
         }
     }
-    private suspend fun getThisRecipe(recipeId: Long): Recipe {
+    private suspend fun getThisRecipe(recipeId: String): Recipe {
         return withContext(Dispatchers.IO) {
             repository.getThisRecipe(recipeId)
         }

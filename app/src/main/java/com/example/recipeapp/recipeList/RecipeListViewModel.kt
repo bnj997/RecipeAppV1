@@ -42,10 +42,10 @@ class RecipeListViewModel(application: Application) : AndroidViewModel(applicati
 
     /** HANDLES LOGIC WHEN PRESSING ON LIST ITEM
      **/
-    private var _openTaskEvent = MutableLiveData<Long>()
-    val openTaskEvent: LiveData<Long>
+    private var _openTaskEvent = MutableLiveData<String>()
+    val openTaskEvent: LiveData<String>
         get() = _openTaskEvent
-    fun openRecipe(recipeId: Long) {
+    fun openRecipe(recipeId: String) {
         _openTaskEvent.value = recipeId
     }
 

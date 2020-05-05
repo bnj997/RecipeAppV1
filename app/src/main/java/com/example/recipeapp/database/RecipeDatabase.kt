@@ -1,17 +1,14 @@
 package com.example.recipeapp.database
 
-import android.content.Context
+import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 /** 'entities' refers to what class you want to keep in this database */
-@Database(entities = [Recipe::class], version = 11, exportSchema = false)
+@Database(entities = [Recipe::class], version = 18, exportSchema = false)
 
 abstract class RecipeDatabase : RoomDatabase() {
 
@@ -35,7 +32,7 @@ abstract class RecipeDatabase : RoomDatabase() {
          * Aims to create a single, only instance of this RecipeDatabase
          * This method can be called from the outside
          */
-        fun getInstance(context: Context, scope: CoroutineScope): RecipeDatabase {
+        fun getInstance(context: Application, scope: CoroutineScope): RecipeDatabase {
 
             /**
              * synchronized' means only one thread at a time can access this method

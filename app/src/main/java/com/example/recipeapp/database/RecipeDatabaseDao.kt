@@ -23,5 +23,5 @@ interface RecipeDatabaseDao {
     fun getAllRecipes(): LiveData<List<Recipe>>
 
     @Query("SELECT * FROM recipe_table WHERE recipeId = :recipeId")
-    fun getThisRecipe(recipeId: Long): Recipe
+    fun getThisRecipe(recipeId: String): Recipe
 }

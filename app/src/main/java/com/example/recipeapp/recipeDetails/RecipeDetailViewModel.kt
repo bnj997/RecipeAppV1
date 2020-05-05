@@ -1,6 +1,7 @@
 package com.example.recipeapp.recipeDetails
 
 import android.app.Application
+import android.provider.SyncStateContract.Helpers.update
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -47,17 +48,49 @@ class RecipeDetailViewModel(application: Application) : AndroidViewModel(applica
     }
 
 
-    /** HANDLES INSERT FUNCTIONALITY **/
-    fun onAddNewRecipe() {
+    /** LOGIC TO DETERMINE IF NEW RECIPE OR UPDATING OLD RECIPE
+     *  IF OLD RECIPE, NEED TO SET THE TEXTVIEWS TO THE PREDETERMINED VALUES
+     * **/
+    private var recipeId: String? = null
+    private var isNewRecipe: Boolean = false
+    fun initialise(recipeId: String?) {
+        this.recipeId = recipeId
+        if (recipeId == null) {
+            isNewRecipe = true
+        } else {
+            uiScope.launch {
+                val thisRecipe = getThisRecipe(recipeId)
+                recipeName.value = thisRecipe.recipeName
+                recipeMethod.value = thisRecipe.recipeMethod
+                recipeDuration.value = thisRecipe.recipeDuration
+            }
+        }
+    }
+    private suspend fun getThisRecipe(recipeId: String): Recipe {
+        return withContext(Dispatchers.IO) {
+             repository.getThisRecipe(recipeId)
+        }
+    }
+
+
+
+
+    /** HANDLES INSERT AND UPDATE FUNCTIONALITY **/
+    fun saveRecipe() {
         uiScope.launch {
+            val currentRecipeId = recipeId
             val name = recipeName.value
             val method = recipeMethod.value
             val duration = recipeDuration.value
             if (name == null || method == null || duration == null) {
                 _snackBarMessage.value = true
-            } else {
+            } else if (isNewRecipe || currentRecipeId == null) {
                 val newRecipe = Recipe(name, method, duration)
                 insert(newRecipe)
+                _savedRecipe.value = true
+            } else {
+                val newRecipe = Recipe(name, method, duration, currentRecipeId)
+                update(newRecipe)
                 _savedRecipe.value = true
             }
         }
@@ -65,6 +98,11 @@ class RecipeDetailViewModel(application: Application) : AndroidViewModel(applica
     private suspend fun insert(recipe: Recipe) {
         withContext(Dispatchers.IO) {
             repository.insert(recipe)
+        }
+    }
+    private suspend fun update(recipe: Recipe) {
+        withContext(Dispatchers.IO) {
+            repository.update(recipe)
         }
     }
 

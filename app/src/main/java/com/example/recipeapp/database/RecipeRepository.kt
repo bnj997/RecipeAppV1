@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 
 class RecipeRepository(private val recipeDao: RecipeDatabaseDao) {
 
+
     val allRecipes: LiveData<List<Recipe>> = recipeDao.getAllRecipes()
 
     @Suppress("RedundantSuspendModifier")
@@ -35,7 +36,7 @@ class RecipeRepository(private val recipeDao: RecipeDatabaseDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun getThisRecipe(recipeId: Long) : Recipe {
+    suspend fun getThisRecipe(recipeId: String) : Recipe {
         return recipeDao.getThisRecipe(recipeId)
     }
 
